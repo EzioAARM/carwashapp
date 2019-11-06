@@ -77,7 +77,8 @@ class LoginFormState extends State<LoginForm> {
           TextFormField(
             decoration: InputDecoration(
               border: InputBorder.none,
-              labelText: 'Nombre de usuario'
+              labelText: 'Nombre de usuario',
+              prefixIcon: Icon(Icons.person)
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -89,7 +90,8 @@ class LoginFormState extends State<LoginForm> {
           TextFormField(
             decoration: InputDecoration(
               border: InputBorder.none,
-              labelText: 'Contraseña'
+              labelText: 'Contraseña',
+              prefixIcon: Icon(Icons.lock)
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -108,7 +110,7 @@ class LoginFormState extends State<LoginForm> {
                       .showSnackBar(SnackBar(content: Text('Processing Data')));
                 }
               },
-              child: Text('Iniciar sesión'),
+              child: Text("Iniciar sesion"),
               color: Colors.blue,
             ),
           ),
