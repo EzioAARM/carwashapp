@@ -31,12 +31,12 @@ class MyApp extends StatelessWidget {
                     decoration: new BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.blue,
+                          color: Color.fromRGBO(13, 71, 161, 0.2),
                           blurRadius: 20.0,
-                          spreadRadius: 5.0,
+                          spreadRadius: 1.0,
                           offset: Offset(
-                            5.0,
-                            5.0,
+                            2.0,
+                            2.0,
                           ),
                         )
                       ]
@@ -47,10 +47,23 @@ class MyApp extends StatelessWidget {
             ),
           ),
           decoration: new BoxDecoration(
-            color: Colors.lightBlue
+            color: Color.fromRGBO(238, 238, 238, 1)
           ),
         ),
-      ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: 0,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.check),
+              title: Text('login')
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              title: Text('registro')
+            )
+          ],
+        )
+      ), 
     );
   }
 }
