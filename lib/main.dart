@@ -88,6 +88,7 @@ class LoginFormState extends State<LoginForm> {
             },
           ),
           TextFormField(
+            obscureText: true,
             decoration: InputDecoration(
               border: InputBorder.none,
               labelText: 'Contraseña',
