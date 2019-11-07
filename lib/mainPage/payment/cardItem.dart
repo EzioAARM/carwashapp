@@ -63,7 +63,8 @@ class PaymentItemState extends State<PaymentItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+
+    Widget cardItem = Card(
       color: cardColor,
       child: Container(
         padding: const EdgeInsets.all(15.0),
@@ -98,6 +99,8 @@ class PaymentItemState extends State<PaymentItem> {
         ),
       ),
     );
+    
+    return cardItem;
   }
   
 }

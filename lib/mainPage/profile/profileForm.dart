@@ -25,7 +25,7 @@ class ProfileFormState extends State<ProfileForm> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: new Container(
                     margin: new EdgeInsets.all(10.0),
                     child: Column(

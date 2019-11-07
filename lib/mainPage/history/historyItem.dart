@@ -50,7 +50,7 @@ class HistoryItemState extends State<HistoryItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    Widget cardItem = Card(
       child: Container(
         padding: const EdgeInsets.all(15.0),
         child: Row(
@@ -106,6 +106,7 @@ class HistoryItemState extends State<HistoryItem> {
         ),
       ),
     );
+    return cardItem;
   }
   
 }

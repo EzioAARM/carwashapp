@@ -35,43 +35,48 @@ class _BottomNavBarState extends State<BottomBarStart> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton.extended(
-        tooltip: 'iniciar lavado',
-        icon: Icon(Icons.local_car_wash),
-        label: Text('lavar'),
-        onPressed: () {},
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history),
-              title: Text('historial')
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              title: Text('profile')
-            ),
-          ],
-          currentIndex: _curIndex,
-          onTap: (index) {
-            setState(() {
-              _curIndex = index;
-              switch (_curIndex) {
-                case 0:
-                  _content = HistoryList();
-                  break;
-                case 1:
-                  _content = ProfileForm();
-                  break;
-              }
-            });
-          },
+    return WillPopScope(
+      child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton.extended(
+          tooltip: 'iniciar lavado',
+          icon: Icon(Icons.local_car_wash),
+          label: Text('lavar'),
+          onPressed: () {},
         ),
+        bottomNavigationBar: BottomAppBar(
+          child: BottomNavigationBar(
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history),
+                title: Text('historial')
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline),
+                title: Text('profile')
+              ),
+            ],
+            currentIndex: _curIndex,
+            onTap: (index) {
+              setState(() {
+                _curIndex = index;
+                switch (_curIndex) {
+                  case 0:
+                    _content = HistoryList();
+                    break;
+                  case 1:
+                    _content = ProfileForm();
+                    break;
+                }
+              });
+            },
+          ),
+        ),
+        body: _content,
       ),
-      body: _content,
+      onWillPop: () {
+        return new Future(() => false);
+      },
     );
   }
 

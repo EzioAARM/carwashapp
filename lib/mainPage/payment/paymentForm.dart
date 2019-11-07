@@ -30,7 +30,8 @@ class PaymentFormState extends State<PaymentForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
+
+    Widget cardForm = Form(
       key: _formKey,
       child: new Container(
           child: Center(
@@ -58,6 +59,50 @@ class PaymentFormState extends State<PaymentForm> {
                               themeColor: Colors.red,
                               onCreditCardModelChange: onCreditCardModelChange,
                             ),
+                            SizedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: <Widget>[
+                                    Container(
+                                      child: OutlineButton(
+                                        borderSide: BorderSide(
+                                          color: Colors.red,
+                                          width: 2,
+                                        ),
+                                        focusColor: Colors.redAccent,
+                                        hoverColor: Colors.redAccent,
+                                        highlightedBorderColor: Colors.redAccent,
+                                        child: Text(
+                                          'Cancelar',
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        onPressed: () {
+
+                                        },
+                                      ),
+                                    ),
+                                    Container(
+                                      child: FlatButton(
+                                        color: Colors.green,
+                                        child: Text(
+                                          'Guardar',
+                                          style: TextStyle(
+                                            color: Color.fromRGBO(238, 238, 238, 1)
+                                          ),
+                                        ),
+                                        onPressed: () {
+
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -84,6 +129,12 @@ class PaymentFormState extends State<PaymentForm> {
             color: Color.fromRGBO(238, 238, 238, 1)
           ),
         ),
+    );
+
+    return ListView(
+      children: <Widget>[
+        cardForm
+      ],
     );
   }
 
