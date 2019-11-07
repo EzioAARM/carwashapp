@@ -64,18 +64,20 @@ class HistoryItemState extends State<HistoryItem> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0),
-                child:   
-                  Column(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               this.carType,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20
+                                fontSize: 20,
                               ),
                             ),
                             Text(this.dateService),
@@ -88,9 +90,10 @@ class HistoryItemState extends State<HistoryItem> {
               ),
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text(
-                  this.amount.toString(),
+                  'Q.' + this.amount.toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25

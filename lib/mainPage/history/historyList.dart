@@ -15,27 +15,15 @@ class HistoryListState extends State<HistoryList> {
       decoration: new BoxDecoration(
         color: Color.fromRGBO(238, 238, 238, 1)
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Container(
-                margin: new EdgeInsets.all(10.0),
-                child: Column(
-                  children: <Widget>[
-                    // load items here
-                    HistoryItem('sedan', 'lunes', '1123', 55),
-                    HistoryItem('suv', 'lunes', '1123', 70)
-
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        child: ListView(
+          padding: const EdgeInsets.all(25.0),
+          children: <Widget>[
+            HistoryItem('sedan', 'lunes', '1123', 55),
+            HistoryItem('suv', 'lunes', '1123', 70)
+          ],
+        ),
       ),
     );
   } 

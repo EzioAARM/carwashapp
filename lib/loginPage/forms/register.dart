@@ -1,3 +1,4 @@
+import 'package:carwashapp/mainPage/mainPage.dart';
 import 'package:flutter/material.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -91,10 +92,11 @@ class RegisterFormState extends State<RegisterForm> {
                               alignment: Alignment.centerRight,
                               child: OutlineButton(
                                 onPressed: () {
-                                  if (_formKey.currentState.validate()) {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
+                                  /*if (_formKey.currentState.validate()) {
                                     Scaffold.of(context)
                                         .showSnackBar(SnackBar(content: Text('Verificando la informacion')));
-                                  }
+                                  }*/
                                 },
                                 child: Text("Registrarme"),
                                 color: Colors.blue,
