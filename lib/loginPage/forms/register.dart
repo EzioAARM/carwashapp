@@ -56,6 +56,7 @@ class RegisterFormState extends State<RegisterForm> {
                                 }
                                 return null;
                               },
+                              keyboardType: TextInputType.emailAddress,
                             ),
                             TextFormField(
                               obscureText: true,
