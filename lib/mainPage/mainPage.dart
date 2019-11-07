@@ -1,15 +1,14 @@
-import 'package:carwashapp/loginPage/loginPage.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MainPage());
 
-class MyApp extends StatelessWidget {
+class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     final appTitle = 'Main page';
     // Aqui agregar la verificacion cuando se tenga un token jwt
-    Widget _content = new LoginPage();
+    Widget _content = null;
     return MaterialApp(
       title: appTitle,
       theme: ThemeData(
