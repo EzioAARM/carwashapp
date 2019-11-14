@@ -1,5 +1,8 @@
-import 'package:carwashapp/mainPage/mainPage.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:carwashapp/globals.dart' as globals;
 
 class RegisterForm extends StatefulWidget {
   @override
@@ -12,9 +15,17 @@ class RegisterFormState extends State<RegisterForm> {
   
   final _formKey = GlobalKey<FormState>();
 
+  TextEditingController nombreController = new TextEditingController();
+  TextEditingController apellidoController = new TextEditingController();
+  TextEditingController usernameController = new TextEditingController();
+  TextEditingController correoController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  TextEditingController passwordVerifyController = new TextEditingController();
+  var client = new HttpClient();
+
   @override
   Widget build(BuildContext context) {
-    
+
     return Form(
       key: _formKey,
       child: new Container(
@@ -33,10 +44,39 @@ class RegisterFormState extends State<RegisterForm> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             TextFormField(
+                              controller: nombreController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                labelText: 'Nombre',
+                                prefixIcon: Icon(Icons.face)
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Ingrese su nombre';
+                                }
+                                return null;
+                              },
+                            ),
+                            TextFormField(
+                              controller: apellidoController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                labelText: 'Apellido',
+                                prefixIcon: Icon(Icons.person_outline)
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Ingrese su apellido';
+                                }
+                                return null;
+                              },
+                            ),
+                            TextFormField(
+                              controller: usernameController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 labelText: 'Nombre de usuario',
-                                prefixIcon: Icon(Icons.person_outline)
+                                prefixIcon: Icon(Icons.account_circle)
                               ),
                               validator: (value) {
                                 if (value.isEmpty) {
@@ -46,6 +86,7 @@ class RegisterFormState extends State<RegisterForm> {
                               },
                             ),
                             TextFormField(
+                              controller: correoController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 labelText: 'Correo electronico',
@@ -60,6 +101,7 @@ class RegisterFormState extends State<RegisterForm> {
                               keyboardType: TextInputType.emailAddress,
                             ),
                             TextFormField(
+                              controller: passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -74,6 +116,7 @@ class RegisterFormState extends State<RegisterForm> {
                               },
                             ),
                             TextFormField(
+                              controller: passwordVerifyController,
                               obscureText: true,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -83,6 +126,13 @@ class RegisterFormState extends State<RegisterForm> {
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return 'Verifique su contraseña';
+                                } else if (passwordController.text != passwordVerifyController.text) {
+                                  Scaffold.of(context)
+                                    .showSnackBar(
+                                      SnackBar(
+                                        content: Text('Las contraseñas deben coincidir'),
+                                      )
+                                    );
                                 }
                                 return null;
                               },
@@ -91,12 +141,43 @@ class RegisterFormState extends State<RegisterForm> {
                               padding: const EdgeInsets.symmetric(vertical: 16.0),
                               alignment: Alignment.centerRight,
                               child: OutlineButton(
-                                onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
-                                  /*if (_formKey.currentState.validate()) {
+                                onPressed: () async {
+                                  if (_formKey.currentState.validate()) {
                                     Scaffold.of(context)
-                                        .showSnackBar(SnackBar(content: Text('Verificando la informacion')));
-                                  }*/
+                                      .showSnackBar(
+                                        SnackBar(
+                                          content: Text('Verificando la informacion'),
+                                          duration: Duration(milliseconds: 300,),
+                                        )
+                                      );
+                                    var dataToSend = '{\"nombre\": \"${nombreController.text}\",\"apellido\": \"${apellidoController.text}\",\"username\": \"${usernameController.text}\",\"email\": \"${correoController.text}\",\"password\": \"${passwordController.text}\"}';
+                                    var response = await http.post('${globals.StageUrl}/login', body: dataToSend);
+                                    Map<String, dynamic> decodedResponse = jsonDecode(response.body);
+                                    switch (decodedResponse['statusCode']) {
+                                      case 200:
+                                        Scaffold.of(context)
+                                          .showSnackBar(
+                                            SnackBar(
+                                              content: Text('Registrado con exito'),
+                                              action: SnackBarAction(
+                                                label: 'iniciar sesion',
+                                                onPressed: () {
+
+                                                },
+                                              ),
+                                            )
+                                          );
+                                        break;
+                                      case 409:
+                                        Scaffold.of(context)
+                                          .showSnackBar(SnackBar(content: Text('El usuario que intenta registrar ya existe')));
+                                        break;
+                                      default:
+                                        Scaffold.of(context)
+                                          .showSnackBar(SnackBar(content: Text('Se produjo un error inesperado')));
+                                        break;
+                                    }
+                                  }
                                 },
                                 child: Text("Registrarme"),
                                 color: Colors.blue,

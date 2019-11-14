@@ -1,5 +1,8 @@
 import 'package:carwashapp/mainPage/history/historyList.dart';
 import 'package:carwashapp/mainPage/profile/profileForm.dart';
+import 'package:qrcode_reader/qrcode_reader.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/status.dart' as status;
 import 'package:flutter/material.dart';
 
 void main() => runApp(MainPage());
@@ -31,7 +34,31 @@ class _BottomNavBarState extends State<BottomBarStart> {
   var _curIndex = 0;
   Widget _content = new HistoryList();
 
+  showAlertDialog(BuildContext context, String data) {
 
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () { },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("My title"),
+      content: Text(data),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +69,17 @@ class _BottomNavBarState extends State<BottomBarStart> {
           tooltip: 'iniciar lavado',
           icon: Icon(Icons.local_car_wash),
           label: Text('lavar'),
-          onPressed: () {},
+          onPressed: () {
+            Future<String> futureString = new QRCodeReader().scan();
+            futureString.then((value) {
+              var unixTime = value.split(',')[0];
+              var sede = value.split(',')[1];
+              final channel = IOWebSocketChannel.connect('wss://iib2b26n9c.execute-api.us-east-1.amazonaws.com/test');
+              channel.sink.add('{ "codigo": "$unixTime", "sede":"$sede", "userId":"1", "idPago":"1", "action": "lavar" }');
+              channel.sink.close();
+            });
+            
+          },
         ),
         bottomNavigationBar: BottomAppBar(
           child: BottomNavigationBar(

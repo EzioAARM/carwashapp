@@ -61,6 +61,8 @@ class _BottomNavBarState extends State<BottomBarStart> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: bottomBar(),
+      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: _content,
     );
   }
