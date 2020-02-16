@@ -75,7 +75,6 @@ class LoginFormState extends State<LoginForm> {
                               alignment: Alignment.centerRight,
                               child: OutlineButton(
                                 onPressed: () async {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
                                   if (_formKey.currentState.validate()) {
                                     Scaffold.of(context)
                                         .showSnackBar(
@@ -89,9 +88,6 @@ class LoginFormState extends State<LoginForm> {
                                     Map<String, dynamic> decodedResponse = jsonDecode(response.body);
                                     switch (decodedResponse['statusCode']) {
                                       case 200:
-                                        final prefs = await SharedPreferences.getInstance();
-                                        prefs.setString('token', decodedResponse['token']);
-                                        prefs.setString('username', usernameController.text);
                                         Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
                                         Scaffold.of(context)
                                           .showSnackBar(
@@ -100,6 +96,11 @@ class LoginFormState extends State<LoginForm> {
                                               duration: Duration(milliseconds: 500,),
                                             )
                                           );
+                                        final prefs = await SharedPreferences.getInstance();
+                                        prefs.setString('token', decodedResponse['token']);
+                                        prefs.setString('username', usernameController.text);
+                                        prefs.setString('userid', decodedResponse['userid']);
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
                                         break;
                                       case 502:
                                         Scaffold.of(context)
@@ -114,7 +115,7 @@ class LoginFormState extends State<LoginForm> {
                                         Scaffold.of(context)
                                           .showSnackBar(
                                             SnackBar(
-                                              content: Text('El usuario que ingresaste no existe'),
+                                              content: Text('Verifica la informacion que ingresaste'),
                                               duration: Duration(milliseconds: 1000,),
                                             )
                                           );

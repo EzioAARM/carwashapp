@@ -1,8 +1,6 @@
 import 'package:carwashapp/mainPage/history/historyList.dart';
 import 'package:carwashapp/mainPage/profile/profileForm.dart';
 import 'package:qrcode_reader/qrcode_reader.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/status.dart' as status;
 import 'package:flutter/material.dart';
 
 void main() => runApp(MainPage());
@@ -74,9 +72,7 @@ class _BottomNavBarState extends State<BottomBarStart> {
             futureString.then((value) {
               var unixTime = value.split(',')[0];
               var sede = value.split(',')[1];
-              final channel = IOWebSocketChannel.connect('wss://iib2b26n9c.execute-api.us-east-1.amazonaws.com/test');
-              channel.sink.add('{ "codigo": "$unixTime", "sede":"$sede", "userId":"1", "idPago":"1", "action": "lavar" }');
-              channel.sink.close();
+              
             });
             
           },

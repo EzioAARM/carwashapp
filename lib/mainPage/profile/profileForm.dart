@@ -2,6 +2,8 @@ import 'package:carwashapp/loginPage/loginPage.dart';
 import 'package:carwashapp/mainPage/payment/cardItem.dart';
 import 'package:carwashapp/mainPage/payment/paymentForm.dart';
 import 'package:flutter/material.dart';
+import 'package:carwashapp/globals.dart' as globals;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileForm extends StatefulWidget {
   @override
@@ -76,7 +78,11 @@ class ProfileFormState extends State<ProfileForm> {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 35.0),
                                   child: OutlineButton(
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      globals.prefs = await SharedPreferences.getInstance();
+                                      print(globals.prefs.getString('token'));
+                                      globals.prefs.remove('token');
+                                      globals.prefs.remove('username');
                                       Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
                                     },
                                     child: Text('Cerrar sesion'),
